@@ -1,14 +1,14 @@
+
+
 #include "iostream"
 
-    typedef void (*rectangle_cb_t)( void *data);
-
+typedef void (*rectangle_cb_t)( void *data);
 
 class Rectangle {
     int width, height;
 
   public:
     rectangle_cb_t cb;
-
 
 };
 
@@ -24,9 +24,9 @@ int main(){
 
     Rectangle Rec1;
     Rec1.cb = event_cb;
-        Rec1.cb(ptr);
+    Rec1.cb(ptr);
 
-std::cout << "Hello \n";
+    std::cout << "Hello \n";
 
 return 0;
 
