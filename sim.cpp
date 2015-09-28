@@ -23,7 +23,7 @@ void *thread_func(void *node_p){
 
     node_ptr = (node *) node_p;
 
-    node_ptr->behaviour();
+    node_ptr->behaviour(node_ptr->port_p);
 
    pthread_exit(NULL);
    }
@@ -57,7 +57,6 @@ bool sim::run(network *network_p){
 
 
     int counter = 0;
-    void *attr[2];
     for(counter = 0; counter < (network_p->node_number);counter++){
         pthread_join(network_p->node_p[counter]->thread,NULL);
 
