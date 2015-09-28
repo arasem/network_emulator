@@ -3,7 +3,26 @@
 
 #include "pthread.h"
 
-typedef void (*node_cb_t)( void );
+class node;
+class connection;
+class port;
+
+typedef void (node_cb_t)(port *port_p);
+
+class port{
+public:
+int input_number;
+connection **input_p;
+int output_number;
+connection **output_p;
+
+};
+
+class connection{
+    public:
+    bool problem;
+
+};
 
 class node {
 
@@ -12,16 +31,13 @@ class node {
         char name;
         bool problem;
         pthread_t thread;
-        node_cb_t cb;
-        void behaviour(void);
+        port *port_p;
+        node_cb_t *cb;
+        void behaviour(port *port_p);
         node(void);
 
 };
-class connection{
 
-    bool problem;
-
-};
 
 
 class network{
