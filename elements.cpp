@@ -2,8 +2,10 @@
 #include "elements.h"
 
 
-void node::behaviour(void){
-    this->cb();
+void node::behaviour(port *port_p){
+typedef void func(port *port_p );
+    func *f = (func *)this->cb;
+    f(this->port_p);
 
 }
 
