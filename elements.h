@@ -35,6 +35,7 @@ class node {
         node_cb_t *cb;
         void behaviour(port *port_p);
         node(void);
+        int ms_interaction_time;
 
 };
 
