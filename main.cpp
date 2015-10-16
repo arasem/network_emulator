@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <ctype.h>
+#include <random>
 static void event_cb(port *port_p ){
     //int *value = (int*)(data);
 
@@ -122,8 +123,28 @@ setrlimit(RLIMIT_STACK, &rl);
     network1->node_number = 3;
     network1->node_p = node_array;
     sim sim1(45,5);
-   // sim1.create(network1);
+    sim1.create(network1);
     sim1.run(network1);
+
+/*
+ const int nrolls=9;  // number of experiments
+  const int nintervals= 45/5; // number of intervals
+
+  std::default_random_engine generator;
+  std::exponential_distribution<double> distribution(4);
+
+  int p[nintervals]={};
+  for (int i=0; i<nrolls; ++i) {
+    double number = distribution(generator);
+     ++p[int(nintervals*number)];
+  }
+
+std::cout << "exponential_distribution (3.5):" << std::endl;
+  std::cout << std::fixed; std::cout.precision(3);
+ for (int i=0; i<nintervals; ++i) {
+    std::cout << float(i)*5 << ": ";
+    std::cout << float(p[i])/9 << std::endl;
+  }*/
 
     while(1);
 
