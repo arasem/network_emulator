@@ -10,6 +10,7 @@ class sim{
     private:
         int current_sim_time = 0;
         int event_number;
+        bool *prob;
     public:
        int ms_sim_time;
         int ms_sim_resolution;
