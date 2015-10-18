@@ -123,28 +123,31 @@ setrlimit(RLIMIT_STACK, &rl);
     network1->node_number = 3;
     network1->node_p = node_array;
     sim sim1(45,5);
+    sim1.distribution_t = EXPONENTIAL_DIST;
     sim1.create(network1);
     sim1.run(network1);
 
+
+
 /*
- const int nrolls=9;  // number of experiments
-  const int nintervals= 45/5; // number of intervals
+    const int nrolls=10000;  // number of experiments
+    const int nstars=100;    // maximum number of stars to distribute
+    const float lambda = 1/3.5;
+    std::default_random_engine generator;
+    //std::weibull_distribution<double> distribution(1.0,lambda);
+     std::exponential_distribution<double> distribution(3.5);
+    int p[10]={};
+    for (int i=0; i<nrolls; ++i) {
+        double number = distribution(generator);
+        if (number<1.0) ++p[int(10*number)];
+    }
 
-  std::default_random_engine generator;
-  std::exponential_distribution<double> distribution(4);
-
-  int p[nintervals]={};
-  for (int i=0; i<nrolls; ++i) {
-    double number = distribution(generator);
-     ++p[int(nintervals*number)];
-  }
-
-std::cout << "exponential_distribution (3.5):" << std::endl;
-  std::cout << std::fixed; std::cout.precision(3);
- for (int i=0; i<nintervals; ++i) {
-    std::cout << float(i)*5 << ": ";
-    std::cout << float(p[i])/9 << std::endl;
-  }*/
+    std::cout << "exponential_distribution (3.5):" << std::endl;
+    std::cout << std::fixed; std::cout.precision(3);
+    for (int i=0; i<10; ++i) {
+        std::cout << i << "-" << (i+1) << ": ";
+        std::cout << float(p[i])/nrolls << std::endl;
+}*/
 
     while(1);
 
