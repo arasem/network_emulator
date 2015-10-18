@@ -60,27 +60,50 @@ bool nextBool(double probability)
 
 bool sim::create(network *network_p){
 
-    const int nrolls=10000;  // number of experiments
-    const int nintervals= this->event_number; // number of intervals
+    const int nrolls = 10000;  // number of experiments
+    const int nstars=100;    // maximum number of stars to distribute
+    int nintervals; // number of intervals
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
-    std::exponential_distribution<double> distribution(5);
+    float lambda;
+    float alfa;
+    bool dummy[9];
+    double dummy2[9];
+
+    switch(this->distribution_t){
+        case EXPONENTIAL_DIST:
+            alfa = 1.0;
+            lambda = 0.2;
+            nintervals= this->event_number;
+            //nrolls = 10000;
+        break;
+        case WEIBULL_DIST:
+            alfa= 2.0;
+            lambda = 4.0;
+            nintervals= 1;
+            //nrolls = 1000;
+        break;
+        default:
+        std::cout << "you didnt select distribution option" << std::endl;
+        while(1);
+        break;
+    }
+
+    std::weibull_distribution<double> distribution(alfa,lambda);
 
     int* p= new int[this->event_number];
     double *prob = new double[this->event_number];
     bool *real_prob = new bool[this->event_number];
-    bool dummy[9];
-    int dummy2[9];
 
     for (int i=0; i<nrolls; ++i) {
     double number = distribution(generator);
      ++p[int(nintervals*number)];
     }
-    for (int i=0; i<nintervals; ++i) {
-        dummy2[i] = p[i];
+    for (int i=0; i<this->event_number; ++i) {
         prob[i]= double(p[i])/double(nrolls);
+        dummy2[i] = prob[i];
         real_prob[i] = nextBool(prob[i]);
-        dummy[i] =  real_prob[i];
+        dummy[i] = real_prob[i] ;
     }
 
     this->prob = real_prob;
@@ -111,13 +134,14 @@ bool sim::run(network *network_p){
     }
 
     while(this->current_sim_time < this->ms_sim_time){
-
+        event_array[event_counter] = new event_list;
+        event_array[event_counter]->empty_step = true;
         for(node_counter = 0; node_counter < network_p->node_number;node_counter++){
             if(network_p->node_p[node_counter]->ms_interaction_time == current_sim_time){
                 event_ ++;
-                event_array[event_counter] = new event_list;
                 event_array[event_counter]->event_number = event_;
                 event_array[event_counter]->event_array[event_ - 1]= node_counter;
+                event_array[event_counter]->empty_step = false;
 
             }
         }
@@ -131,7 +155,7 @@ bool sim::run(network *network_p){
         if(this->prob[event_counter]){
             std::cout<<"Problem occured at Simulation time" << current_sim_time << "ms \n"<< std::endl;
         }else{
-            if(event_array[event_counter] != NULL){
+            if(event_array[event_counter]->empty_step == false){
             std::cout<<"Simulation time" << current_sim_time << "ms \n"<< std::endl;
 
                 if(event_array[event_counter]->event_number == 1){
