@@ -19,9 +19,14 @@ connection **output_p;
 };
 
 class connection{
+    private:
+    bool buffer_full;
+    uint8_t buffer;
     public:
     bool problem;
-
+    connection(void);
+    void send(uint8_t data);
+    uint8_t receive(void);
 };
 
 class node {

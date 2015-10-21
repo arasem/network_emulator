@@ -15,3 +15,20 @@ node::node(void){
     this->thread = thread1;
 
 }
+
+connection::connection(void){
+    this->buffer_full = 0;
+}
+
+void connection::send(uint8_t data){
+    if(this->buffer_full == 0){
+        this->buffer = data;
+        this->buffer_full = 1;
+    }
+}
+
+
+uint8_t connection::receive(void){
+
+    return this->buffer;
+}
