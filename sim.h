@@ -35,4 +35,12 @@ class event_list{
 };
 
 
+typedef struct{
+    int event_number;
+    bool *prob;
+    network *network_p;
+}engine_struct_t;
+
+
+
 #endif
