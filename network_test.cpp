@@ -16,9 +16,8 @@ static void event_cb(port *port_p ){
     std::cout<<"node1 has been started  :" << port_p->input_number << "\n"<< std::endl;
     std::cout<<""<< " data sending....  \n"<< std::endl;
     for(index = 0; index < 8; index++){
-        port_p->input_p[0]->send(data[i]);
+        port_p->input_p[0]->send(data[index]);
     }
-    while()
 
 
 }
@@ -82,17 +81,19 @@ network* test_network(void){
     node_array[0]->problem = 0;
     node_array[0]->port_p = port_node0;
     node_array[0]->ms_interaction_time = 0;
+    node_array[0]->continious = 0;
     node_array[1] = new node;
     node_array[1]->cb = event_cb2;
     node_array[1]->problem = 0;
     node_array[1]->port_p = port_node1;
     node_array[1]->ms_interaction_time = 20;
+    node_array[1]->continious = 1;
     node_array[2] = new node;
     node_array[2]->cb = event_cb3;
     node_array[2]->problem = 0;
     node_array[2]->port_p = port_node1;
     node_array[2]->ms_interaction_time = 40;
-
+    node_array[2]->continious = 0;
 
 
     network *network1 = new network;
