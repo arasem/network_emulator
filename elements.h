@@ -1,6 +1,6 @@
 #ifndef ELEMENTS_H
 #define ELEMENTS_H
-
+#include <stdint.h>
 #include "pthread.h"
 
 class node;
@@ -41,6 +41,7 @@ class node {
         void behaviour(port *port_p);
         node(void);
         int ms_interaction_time;
+        bool continious;
 
 };
 
