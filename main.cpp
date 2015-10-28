@@ -43,11 +43,10 @@ setrlimit(RLIMIT_STACK, &rl);
 
     network *network1 = new network;
     network1 = test_network();
-    sim sim1(45,5);
-    sim1.distribution_t = EXPONENTIAL_DIST;
+    sim sim1(1000,5);
+    sim1.distribution_t = WEIBULL_DIST;
     sim1.create(network1);
     sim1.run(network1);
-
 
 
 /*
@@ -55,21 +54,22 @@ setrlimit(RLIMIT_STACK, &rl);
     const int nstars=100;    // maximum number of stars to distribute
     const float lambda = 1/3.5;
     std::default_random_engine generator;
-    //std::weibull_distribution<double> distribution(1.0,lambda);
+    //std::weibull_distribution<double> distribution(1.0,1.0);
      std::exponential_distribution<double> distribution(3.5);
-    int p[10]={};
+    int p[200]={};
     for (int i=0; i<nrolls; ++i) {
         double number = distribution(generator);
-        if (number<1.0) ++p[int(10*number)];
+        if (number<1.0) ++p[int(200*number)];
     }
 
     std::cout << "exponential_distribution (3.5):" << std::endl;
-    std::cout << std::fixed; std::cout.precision(3);
-    for (int i=0; i<10; ++i) {
+    std::cout << std::fixed; std::cout.precision(5);
+    for (int i=0; i<200; ++i) {
         std::cout << i << "-" << (i+1) << ": ";
-        std::cout << float(p[i])/nrolls << std::endl;
-}*/
-
+            std::cout << std::string(p[i]*nstars/nrolls,'*') << std::endl;
+       // std::cout << float(p[i])/nrolls << std::endl;
+}
+*/
     while(1);
 
 return 0;
