@@ -20,12 +20,15 @@ connection **output_p;
 
 class connection{
     private:
-    bool buffer_full;
+    int hold_delay;
     uint8_t buffer;
+        int delay;// delay_time/resolution
     public:
+    int packet_sent;
+    int packet_received;
     bool problem;
-    connection(void);
-    void send(uint8_t data);
+    connection(int);
+    void send();
     uint8_t receive(void);
 };
 

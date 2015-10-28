@@ -16,19 +16,35 @@ node::node(void){
 
 }
 
-connection::connection(void){
-    this->buffer_full = 0;
+connection::connection(int delay_time){
+    this->delay = delay_time;
+    this->packet_sent = 0;
+    this->packet_received = 0;
+    this->hold_delay = delay_time;
+    this->buffer = 0;
 }
 
-void connection::send(uint8_t data){
-    if(this->buffer_full == 0){
-        this->buffer = data;
-        this->buffer_full = 1;
+void connection::send(){
+    this->packet_sent++;
+    if(this->delay > 0){
+       this->delay--;
+       this->buffer = 0;
+    }else{
+        this->buffer = 1;
+        this->delay = this->hold_delay;
     }
+
 }
 
 
 uint8_t connection::receive(void){
+    uint8_t data;
+    data = this->buffer;
+    if(this->buffer > 0){
+        this->buffer = 0;
+        this->packet_received++;
+    }
 
-    return this->buffer;
+
+    return data;
 }
