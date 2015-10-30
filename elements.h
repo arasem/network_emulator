@@ -21,8 +21,8 @@ connection **output_p;
 class connection{
     private:
     int hold_delay;
-    uint8_t buffer;
-        int delay;// delay_time/resolution
+    int buffer;
+    int delay;// delay_time/resolution
     public:
     int packet_sent;
     int packet_received;
