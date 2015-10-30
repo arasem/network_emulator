@@ -4,7 +4,7 @@
 #include "elements.h"
 
 network* test_network(void);
-
+network* test_cluster(void);
 
 
 
