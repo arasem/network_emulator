@@ -12,8 +12,6 @@
 
 static void event_cb(port *port_p ){
     //int *value = (int*)(data);
-    std::cout<<"node1 has been started  :" << port_p->input_number << "\n"<< std::endl;
-    std::cout<<" data sending....  \n"<< std::endl;
     port_p->output_p[0]->send();
   /*  received_data = port_p->input_p[0]->receive();
     if(received_data != 0){
@@ -23,18 +21,11 @@ static void event_cb(port *port_p ){
 
 static void event_cb2(port *port_p ){
     //int *value = (int*)(data);
-
-    uint8_t data = 0;
-    uint8_t received_data = 0;
    /* std::cout<<"node2 has been started  :" << port_p->input_number << "\n"<< std::endl;
     std::cout<<" data sending....  \n"<< std::endl;
     port_p->output_p[0]->send(data);*/
-    received_data = port_p->input_p[0]->receive();
-    if(received_data != 0){
-        std::cout <<"packet has received : "<< (int) received_data << "\n" <<std::endl;
-    }
-     std::cout <<"packet received counter: "<< port_p->input_p[0]->packet_received << "\n" << std::endl;
-     std::cout <<"packet sent counter: "<< port_p->input_p[0]->packet_sent << "\n" << std::endl;
+   port_p->input_p[0]->receive();
+
 }
 
 static void event_cb3(port *port_p ){
@@ -64,7 +55,7 @@ network* test_network(void){
     link1 = new connection *[1];
     link0[0] = new connection(0);
     link0[0]->problem = 0;
-    link1[0] = new connection(5);
+    link1[0] = new connection(15);
     link1[0]->problem = 0;
 /*
     input_array_node0 = new connection *[1];
@@ -113,6 +104,7 @@ network* test_network(void){
     network *network1 = new network;
     network1->node_number = 2;
     network1->node_p = node_array;
+    network1->connection_number = 1;
 
     return network1;
 
