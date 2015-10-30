@@ -255,7 +255,7 @@ bool sim::run(network *network_p){
 
 void sim::statistics(sim_statistical_t* results,network* network_p){
 
-    int connection_count,counter2;
+    int connection_count,counter2 = 0;
     int total_sent_packet = 0;
     int total_received_packet = 0;
     float throughput_factor = (float)1000/this->ms_sim_time;
@@ -267,7 +267,7 @@ void sim::statistics(sim_statistical_t* results,network* network_p){
             total_received_packet = total_received_packet + network_p->node_p[connection_count]->port_p->input_p[counter2]->packet_received;
         }
         for(counter2 = 0; counter2 < network_p->node_p[connection_count]->port_p->output_number; counter2++){
-            total_sent_packet = total_sent_packet + network_p->node_p[connection_count]->port_p->output_p[counter2]->packet_sent;
+           total_sent_packet = total_sent_packet + network_p->node_p[connection_count]->port_p->output_p[counter2]->packet_sent;
         }
 
     }

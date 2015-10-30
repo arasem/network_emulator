@@ -38,7 +38,7 @@ class sim{
 class event_list{
     public:
     int ms_event_time;
-    int event_array[50];
+    int event_array[10000];
     int event_number;
     bool empty_step;
 };
