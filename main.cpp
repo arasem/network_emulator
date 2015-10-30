@@ -39,16 +39,19 @@ setrlimit(RLIMIT_STACK, &rl);
     int value = DUMMY;
 
     std::cout << "Hello \n" << std::endl;
-
+    sim_statistical_t results;
 
     network *network1 = new network;
     network1 = test_network();
-    sim sim1(1000,5);
+    sim sim1(600,5);
     sim1.distribution_t = WEIBULL_DIST;
     sim1.create(network1);
     sim1.run(network1);
-
-
+    sim1.statistics(&results,network1);
+    std::cout <<"packet sent counter: "<< results.sent_packet_number << "\n" << std::endl;
+    std::cout <<"packet received counter: "<< results.received_packet_number << "\n" << std::endl;
+    std::cout <<"success ratio  : "<< results.success_ratio << "\n" << std::endl;
+    std::cout <<"throughput  : "<< results.throughput << "\n" << std::endl;
 /*
     const int nrolls=10000;  // number of experiments
     const int nstars=100;    // maximum number of stars to distribute
