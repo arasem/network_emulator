@@ -247,13 +247,39 @@ bool sim::run(network *network_p){
     sim_not_finished = 0;
     pthread_join(periodic_engine_thread,NULL);
     pthread_join(regular_engine_thread,NULL);
-    while(1){
-        sleep(1);
 
-    }
+
     return 0;
 
 }
+
+void sim::statistics(sim_statistical_t* results,network* network_p){
+
+    int connection_count,counter2;
+    int total_sent_packet = 0;
+    int total_received_packet = 0;
+    float throughput_factor = (float)1000/this->ms_sim_time;
+
+    sim_statistical_t statistical_struct;
+
+    for(connection_count = 0; connection_count < network_p->node_number; connection_count++){
+        for(counter2 = 0; counter2 < network_p->node_p[connection_count]->port_p->input_number; counter2++){
+            total_received_packet = total_received_packet + network_p->node_p[connection_count]->port_p->input_p[counter2]->packet_received;
+        }
+        for(counter2 = 0; counter2 < network_p->node_p[connection_count]->port_p->output_number; counter2++){
+            total_sent_packet = total_sent_packet + network_p->node_p[connection_count]->port_p->output_p[counter2]->packet_sent;
+        }
+
+    }
+
+    results->received_packet_number = total_received_packet;
+    results->sent_packet_number = total_sent_packet;
+    results->success_ratio = (float) total_received_packet/total_sent_packet;
+    results->throughput = (float)total_received_packet * throughput_factor;
+
+
+};
+
 /*
 bool sim::run(){
 

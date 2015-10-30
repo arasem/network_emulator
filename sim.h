@@ -11,6 +11,14 @@ typedef enum{
 }distribution_option_t;
 
 
+typedef struct{
+    int sent_packet_number;
+    int received_packet_number;
+    float throughput;//succesful receive packet per second
+    float success_ratio;//received/sent
+
+}sim_statistical_t;
+
 class sim{
     private:
         int current_sim_time = 0;
@@ -23,6 +31,7 @@ class sim{
         //bool create(node *node_p);
         bool create(network *network_p);
         bool run(network *network_p);
+        void statistics(sim_statistical_t* results,network *network_p);
         sim(int , int  );
 };
 
