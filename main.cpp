@@ -42,8 +42,8 @@ setrlimit(RLIMIT_STACK, &rl);
     sim_statistical_t results;
 
     network *network1 = new network;
-    network1 = test_network();
-    sim sim1(600,5);
+    network1 = test_cluster();
+    sim sim1(500000,100);
     sim1.distribution_t = WEIBULL_DIST;
     sim1.create(network1);
     sim1.run(network1);
